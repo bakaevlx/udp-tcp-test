@@ -16,14 +16,12 @@
 
 
 	<dependencies>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -35,6 +33,34 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<!-- simply runs the main method of a Java class; use mvn exec:java 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<configuration>
+					<mainClass>org.my.cep.espertest.EsperDemo</mainClass>
+				</configuration>
+			</plugin>
+			-->
+			<!-- to run esper in a new process; mvn exec:exec -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-Xms512m</argument>
+						<argument>-Xmx1024m</argument>
+						<!-- note the empty classpath tag; it's used to insert the correct 
+							runtime classpath based on the dependencies in pom.xml. -->
+						<argument>-classpath</argument>
+						<classpath />
+						<argument>org.my.cep.espertest.EsperDemo</argument>
+					</arguments>
 				</configuration>
 			</plugin>
 		</plugins>
